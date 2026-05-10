@@ -23,13 +23,21 @@ A background application for Ubuntu that detects media (video/audio) playback in
 1. Install system dependencies:
 ```bash
 sudo apt-get update
-sudo apt-get install python3 python3-pip python3-gi gir1.2-gtk-3.0 gir1.2-appindicator3-0.1 libnotify-bin
+sudo apt-get install python3 python3-pip python3-gi python3-cairo gir1.2-gtk-3.0 gir1.2-appindicator3-0.1 libnotify-bin ffmpeg
 ```
 
 2. Install Python dependencies:
 ```bash
-pip3 install -r requirements.txt
+# For Ubuntu 23.04+ / Debian 12+ (externally-managed Python):
+pip3 install --user -r requirements.txt
+
+# Or use a virtual environment:
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
+
+**Getting "externally-managed-environment" error?** See [FIX-PIP-ERROR.md](FIX-PIP-ERROR.md)
 
 3. Install the browser extension:
    - Chrome/Edge: Load unpacked extension from `browser-extension/` folder
