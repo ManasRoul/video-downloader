@@ -35,7 +35,14 @@ sudo apt-get install -y \
 
 # Install Python dependencies
 echo "Installing Python dependencies..."
-pip3 install -r requirements.txt
+
+# Check if we're on a system with externally-managed Python
+if python3 -c "import sys; exit(0 if sys.version_info >= (3, 11) else 1)" 2>/dev/null; then
+    echo "Detected Python 3.11+ - using --user flag to avoid externally-managed-environment error"
+    pip3 install --user -r requirements.txt
+else
+    pip3 install -r requirements.txt || pip3 install --user -r requirements.txt
+fi
 
 # Install yt-dlp
 echo "Installing yt-dlp..."
