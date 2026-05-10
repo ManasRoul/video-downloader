@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#2196F3"/>
+  
+  <!-- Download arrow -->
+  <g fill="white">
+    <!-- Arrow shaft -->
+    <rect x="54" y="30" width="20" height="45" rx="2"/>
+    
+    <!-- Arrow head -->
+    <path d="M 64 85 L 45 65 L 55 65 L 64 74 L 73 65 L 83 65 Z"/>
+    
+    <!-- Base line -->
+    <rect x="40" y="90" width="48" height="8" rx="2"/>
+  </g>
+  
+  <!-- Play button (video indicator) -->
+  <circle cx="90" cy="38" r="18" fill="#FF5722"/>
+  <path d="M 85 30 L 85 46 L 97 38 Z" fill="white"/>
+</svg>
