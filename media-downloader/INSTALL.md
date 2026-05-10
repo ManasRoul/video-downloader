@@ -82,16 +82,19 @@ sudo apt-get install -y \
 
 Install required Python packages. **Choose the method based on your Ubuntu version:**
 
-### Method A: For Ubuntu 23.04+ / Debian 12+ (Recommended)
+### Method A: Virtual Environment with System Packages
 
-Modern Ubuntu/Debian systems use "externally managed" Python. Use a virtual environment:
+**⚠️ Critical:** You MUST use `--system-site-packages` or PyGObject won't work!
 
 ```bash
+# Install system GTK packages first
+sudo apt-get install -y python3-gi python3-cairo gir1.2-gtk-3.0
+
 # Install python3-venv if not already installed
 sudo apt-get install python3-venv python3-full
 
-# Create a virtual environment
-python3 -m venv venv
+# Create a virtual environment WITH access to system packages
+python3 -m venv --system-site-packages venv
 
 # Activate the virtual environment
 source venv/bin/activate
@@ -108,11 +111,26 @@ python main.py            # Then run the app
 
 Or create a wrapper script (see Step 4b below).
 
-### Method B: For Ubuntu 22.04 and earlier (System-wide with --user)
+### Method B: User Install - NO Virtual Environment (RECOMMENDED ⭐)
+
+**This is the simplest method!** Works on all Ubuntu versions.
 
 ```bash
+# Ensure system packages are installed first
+sudo apt-get install -y python3-gi python3-cairo gir1.2-gtk-3.0 gir1.2-appindicator3-0.1
+
+# Install Python packages to your user directory
 pip3 install --user -r requirements.txt
+
+# Run normally - no activation needed!
+python3 main.py
 ```
+
+**Why this is recommended:**
+- No virtual environment complexity
+- System GTK packages work automatically  
+- No activation/deactivation
+- Works perfectly for desktop GUI apps
 
 ### Method C: Install System Packages (Alternative)
 
@@ -208,7 +226,34 @@ Icons created successfully!
 
 ## Step 7: Test the Application
 
-Run a quick test to ensure everything is working:
+First, verify all imports are working:
+
+```bash
+python3 test_imports.py
+```
+
+**Expected output:**
+```
+Testing imports...
+--------------------------------------------------
+✓ GTK/AppIndicator imports OK
+✓ requests import OK
+✓ yt-dlp import OK
+✓ websocket-client import OK
+✓ psutil import OK
+✓ src.config import OK
+✓ src.daemon import OK
+✓ src.tray_icon import OK
+✓ src.download_dialog import OK
+✓ src.downloader import OK
+✓ src.settings_dialog import OK
+✓ src.websocket_server import OK
+✓ yt-dlp binary OK (version: 2024.XX.XX)
+--------------------------------------------------
+✓ All imports successful!
+```
+
+If all tests pass, run the application:
 
 **If using virtual environment (Method A):**
 ```bash
@@ -424,6 +469,31 @@ cd ~/media-downloader && source venv/bin/activate && python main.py
 sudo apt-get install gnome-shell-extension-appindicator
 gnome-extensions enable ubuntu-appindicators@ubuntu.com
 # Log out and back in
+```
+
+### Common Import Errors
+
+**Error: "ModuleNotFoundError: No module named 'gi'"**
+```bash
+# Fix: Install system package
+sudo apt-get install python3-gi gir1.2-gtk-3.0
+```
+
+**Error: "ModuleNotFoundError: No module named 'yt_dlp'"**
+```bash
+# Fix: Install via pip
+pip3 install --user yt-dlp
+```
+
+**Error: "ModuleNotFoundError: No module named 'websocket_server'"**
+- This was a bug in the code (now fixed)
+- Make sure you have the latest version of the files
+
+**Error: "ModuleNotFoundError: No module named 'src.daemon'"**
+```bash
+# Make sure you're running from the project directory
+cd ~/media-downloader
+python3 main.py  # NOT from inside src/
 ```
 
 ### Issue 2: Extension shows "✗ Not connected"

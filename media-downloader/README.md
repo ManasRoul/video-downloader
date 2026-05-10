@@ -39,6 +39,8 @@ pip install -r requirements.txt
 
 **Getting "externally-managed-environment" error?** See [FIX-PIP-ERROR.md](FIX-PIP-ERROR.md)
 
+**Getting import errors?** See [COMMON-ERRORS.md](COMMON-ERRORS.md)
+
 3. Install the browser extension:
    - Chrome/Edge: Load unpacked extension from `browser-extension/` folder
    - Firefox: Load temporary add-on from `browser-extension/` folder

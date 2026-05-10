@@ -6,7 +6,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('AppIndicator3', '0.1')
 from gi.repository import Gtk, AppIndicator3, GLib
 
-from .download_dialog import DownloadDialog
+from src.download_dialog import DownloadDialog
 
 logger = logging.getLogger(__name__)
 

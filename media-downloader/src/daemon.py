@@ -3,7 +3,7 @@
 import logging
 import threading
 import json
-from websocket_server import WebsocketServer
+from src.websocket_server import WebsocketServer
 
 logger = logging.getLogger(__name__)
 
